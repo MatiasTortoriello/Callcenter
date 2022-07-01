@@ -1,0 +1,133 @@
+MAIN:
+
+
+package callcenter.interfaz;
+
+import java.util.Scanner;
+
+import callcenter.dominio.Contacto;
+import callcenter.dominio.Empresa;
+import callcenter.dominio.Llamada;
+import callcenter.dominio.Provincia;
+
+public class InterfazCallCenter {
+
+	public static void main(String[] args) {
+		
+		final int INCORPORAR_ZONA_DE_COBERTURA = 1, SALIR = 9;
+		Empresa oesteCableColor = new Empresa();
+
+		
+		Scanner input = new Scanner(System.in);
+		int opcion;
+				
+		
+		do {
+			mostrarMenu();
+			opcion = input.nextInt();
+			switch(opcion) {
+			case INCORPORAR_ZONA_DE_COBERTURA: 
+				incorporarZonaDeCobertura(input, oesteCableColor);
+				break;
+			case 2:
+				darDeAltaNuevoContacto(input, oesteCableColor);
+				break;
+			case 3:
+				realizarNuevaLlamada();
+				break;
+			case 4:
+				verInformacionDelContacto();
+				break;
+			case 9:
+				System.out.println("Hasta luego!");
+				break;
+			default:
+				System.out.println("Ingrese una opción correcta.");
+				break;
+			}
+		} while (opcion != 9);
+
+	}
+	
+	private static void mostrarMenu() {
+		System.out.println("Bienvenido al callcenter");	
+		System.out.println("************************");
+		System.out.println("Menu de opciones\n");
+		System.out.println("1 - Incorporar zona de cobertura");
+		System.out.println("2 - Dar de alta un nuevo contacto");
+		System.out.println("3 - Realizar nueva llamada");
+		System.out.println("4 - Ver información del contacto");
+		System.out.println("9 - Salir");
+		System.out.println("************************");
+			
+	}
+	
+	private static void incorporarZonaDeCobertura(Scanner input, Empresa actual) {
+		/*
+		 * Se registra un nuevo código postal dentro de la zona de cobertura de la empresa
+		 */
+		int nuevoCodigoDeCobertura;
+		boolean sePudoAgregar = false;
+		System.out.println("Ingrese el nuevo código: ");
+		nuevoCodigoDeCobertura = input.nextInt();
+		sePudoAgregar = actual.agregarNuevaZonaDeCobertura(nuevoCodigoDeCobertura);
+		if(sePudoAgregar) {
+			System.out.println("Se agregó la zona de cobertura.");
+		} else {
+			System.out.println("No se pudo agregar. Intentá de nuevo o andá a vender panchos.");
+		}
+	}
+	
+	private static void darDeAltaNuevoContacto(Scanner input, Empresa actual) {
+		/*
+		 * Registra un nuevo contacto en la empresa
+		 */
+		Contacto nuevo;
+		String nombre;
+		String apellido;
+		String celular;
+		String eMail;
+		String direccion;
+		int codigoPostal;
+		String localidad;
+		Provincia provincia;
+		boolean esCliente = false;
+		boolean deseaSerLlamado = true;
+		
+		System.out.println();
+		nombre = input.next();
+		System.out.println();
+		apellido = input.next(); 
+		System.out.println();
+		
+		System.out.println();
+		
+		System.out.println();
+		
+		System.out.println();
+		
+		System.out.println();
+		
+		
+		
+	}
+	
+	private static void realizarNuevaLlamada() {
+		/*
+		 * Busca un candidato,  muestra los datos del mismo, y permite almacenar el resultado de la llamada.
+		 * 
+		 * a.	Si la llamada fue exitosa (en ese caso el contacto pasa a ser cliente, y no se lo debe volver a 
+		 * llamar).
+		 * b.	Si el contacto no desea ser llamado nuevamente (la llamada pudo no haber sido exitosa, pero se haga 
+		 * un nuevo intento en el futuro).
+		 * c.	Observaciones: Texto libre donde el operador deja registro de lo conversado.
+		 */
+	}
+	
+	private static void verInformacionDelContacto() {
+		/*
+		 * Se visualiza la información del contacto, incluso el listado de las llamadas que se le hicieron
+		 */
+	}
+
+}
