@@ -1,5 +1,4 @@
-MAIN:
-
+MAIN
 
 package callcenter.interfaz;
 
@@ -14,7 +13,7 @@ public class InterfazCallCenter {
 
 	public static void main(String[] args) {
 		
-		final int INCORPORAR_ZONA_DE_COBERTURA = 1, SALIR = 9;
+		final int INCORPORAR_ZONA_DE_COBERTURA = 1, DAR_DE_ALTA_NUEVO_CONTACTO = 2, REALIZAR_NUEVA_LLAMADA = 3, VER_INFORMACION_DEL_CONTACTO = 4, SALIR = 9;
 		Empresa oesteCableColor = new Empresa();
 
 		
@@ -29,14 +28,14 @@ public class InterfazCallCenter {
 			case INCORPORAR_ZONA_DE_COBERTURA: 
 				incorporarZonaDeCobertura(input, oesteCableColor);
 				break;
-			case 2:
+			case DAR_DE_ALTA_NUEVO_CONTACTO:
 				darDeAltaNuevoContacto(input, oesteCableColor);
 				break;
-			case 3:
-				realizarNuevaLlamada();
+			case REALIZAR_NUEVA_LLAMADA:
+				realizarNuevaLlamada(input, oesteCableColor);
 				break;
-			case 4:
-				verInformacionDelContacto();
+			case VER_INFORMACION_DEL_CONTACTO:
+				verInformacionDelContacto(input, oesteCableColor);
 				break;
 			case 9:
 				System.out.println("Hasta luego!");
@@ -94,25 +93,64 @@ public class InterfazCallCenter {
 		boolean esCliente = false;
 		boolean deseaSerLlamado = true;
 		
-		System.out.println();
+		System.out.println("Ingrese el nombre: \n");
 		nombre = input.next();
-		System.out.println();
+		System.out.println("Ingrese el apellido: \n");
 		apellido = input.next(); 
-		System.out.println();
+		System.out.println("Ingrese el celular: \n");
+		celular = input.next(); 
+
+		do {
+			System.out.println("Ingrese el e-mail: \n");
+			eMail = input.next();
+		}while(!Contacto.esEmailValido(eMail));
 		
-		System.out.println();
+		System.out.println("Ingrese la direccion: \n");
+		direccion = input.next();
+		System.out.println("Ingrese el código postal: \n");
+		codigoPostal = input.nextInt();
+		System.out.println("Ingrese la localidad: \n");
+		localidad = input.next();
+		System.out.println("Ingrese el número de provincia: ");
+		mostrarElListadoDeProvincias();
+		int provinciaIngresada = input.nextInt();
+		provincia = Provincia.values()[provinciaIngresada -1];
 		
-		System.out.println();
+		nuevo = new Contacto(nombre, apellido, celular, eMail, direccion, codigoPostal, localidad, provincia);
 		
-		System.out.println();
-		
-		System.out.println();
-		
-		
+		actual.agregarNuevoContacto(nuevo);
 		
 	}
 	
-	private static void realizarNuevaLlamada() {
+	private static String mostrarElListadoDeProvincias() {
+		System.out.println("1 BUENOS_AIRES,\r\n"
+				+ "2	CABA,\r\n"
+				+ "3	CATAMARCA,\r\n"
+				+ "4	CHACO,\r\n"
+				+ "5	CHUBUT,\r\n"
+				+ "6	CORDOBA,\r\n"
+				+ "7	CORRIENTES,\r\n"
+				+ "8	ENTRE_RIOS,\r\n"
+				+ "9	FORMOSA,\r\n"
+				+ "10	JUJUY,\r\n"
+				+ "11	LA_PAMPA,\r\n"
+				+ "12	LA_RIOJA,\r\n"
+				+ "13	MENDOZA,\r\n"
+				+ "14	MISIONES,\r\n"
+				+ "15	NEUQUEN,\r\n"
+				+ "16	RIO_NEGRO,\r\n"
+				+ "17	SALTA,\r\n"
+				+ "18	SAN_JUAN,\r\n"
+				+ "19	SAN_LUIS,\r\n"
+				+ "20	SANTA_CRUZ,\r\n"
+				+ "21	SANTA_FE,\r\n"
+				+ "22	SANTIAGO_DEL_ESTERO,\r\n"
+				+ "23	TIERRA_DEL_FUEGO,\r\n"
+				+ "24	TUCUMAN");
+		return null;
+	}
+
+	private static void realizarNuevaLlamada(Scanner input, Empresa actual) {
 		/*
 		 * Busca un candidato,  muestra los datos del mismo, y permite almacenar el resultado de la llamada.
 		 * 
@@ -122,12 +160,56 @@ public class InterfazCallCenter {
 		 * un nuevo intento en el futuro).
 		 * c.	Observaciones: Texto libre donde el operador deja registro de lo conversado.
 		 */
+		boolean llamadaExitosa;
+		
+		boolean deseaSerLlamadoNuevamente;
+		
+		String observaciones;
+		
+		Contacto candidato = actual.buscarCandidato();
+		System.out.println(candidato);
+		System.out.println("La llamada fue exitosa? (S/N)");
+		
+		System.out.println("El contacto desea ser llamado nuevamente?");
+		System.out.println("Ingrese las observaciones: ");
 	}
 	
-	private static void verInformacionDelContacto() {
+	private static void verInformacionDelContacto(Scanner input, Empresa actual) {
 		/*
 		 * Se visualiza la información del contacto, incluso el listado de las llamadas que se le hicieron
 		 */
+		String nombre = "";
+		Contacto encontrado = null;
+		System.out.println("Ingrese el nombre del contacto buscado: ");
+		nombre = input.next();
+		encontrado = actual.buscarPorNombre(nombre);
+		if(encontrado != null) {
+			System.out.println("Encontrado.");
+		} else {
+			System.out.println("No se encontró el contacto.");
+		}
+	}
+
+}
+
+
+ORDENAR ARRAY, POR LAS DUDAS!!!
+
+
+
+
+int[] numeros = {1,2,3,4,5,6}
+
+int auxiliar = 0;
+
+for(int i = 0; i<numeros.lenght;i++){
+	for(int j = 1;j<numeros.lenght -1;j++){
+		if(numeros[j] > numeros[j+1]){
+		auxiliar = numeros[j];
+		numeros[j] = numeros[j+1];
+		numeros[j+1] = auxiliar;
+		}
+
 	}
 
 }

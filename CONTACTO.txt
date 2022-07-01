@@ -1,0 +1,124 @@
+CONTACTO: 
+package callcenter.dominio;
+
+public class Contacto {
+	
+	/*
+	 * Se deben incorporar los atributos necesarios.
+	 * 
+	 * •	Nombre y Apellido: No se aceptan números.
+	 * •	Celular: Compuesto del código de país + código de área + número de celular.
+	 * •	E-Mail: Debe contener al menos el símbolo ‘@’ y el caracter ‘.’.
+	 * •	Dirección: Valor alfanumérico.
+	 * •	Código Postal: Valor numérico.
+	 * •	Localidad: Valor alfanumérico.
+	 * •	Provincia. Enumerador que contenga las 23 provincias argentinas.
+	 * •	Es cliente (Si o No): Inicialmente se carga en “No”.
+	 * •	Desea ser llamado nuevamente (Si o No): Inicialmente se carga en “Si”.
+	 */
+	
+
+
+	private String nombre;
+	private String apellido;
+	private String celular;
+	private String eMail;
+	private String direccion;
+	private int codigoPostal;
+	private String localidad;
+	private Provincia provincia;
+	boolean esCliente = false;
+	boolean deseaSerLlamado = true;
+	
+	private Llamada llamadasRecibidas[];
+	private final int CANTIDAD_MAXIMA_DE_LLAMADOS_POR_CONTACTO = 10;
+	
+	public Contacto(String nombre, String apellido, String celular, String eMail, String direccion, int codigoPostal, String localidad, Provincia provincia) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.eMail = eMail;
+		this.direccion = direccion;
+		this.codigoPostal = codigoPostal;
+		this.localidad = localidad;
+		this.provincia = provincia;
+		this.esCliente = false;
+		this.deseaSerLlamado = true;
+		
+		this.llamadasRecibidas = new Llamada[CANTIDAD_MAXIMA_DE_LLAMADOS_POR_CONTACTO];
+	}
+	
+	public static boolean esEmailValido(String eMail) {
+		/*
+		 * Evalúa si un String determinado puede ser almacenado como E-MAIL.
+		 */
+		boolean tieneArroba = false, tienePunto=false;
+		char eMailPropuesto[] = eMail.toCharArray();
+		for(int i=0; i<eMailPropuesto.length;i++) {
+			if(eMailPropuesto[i]=='@') {
+				tieneArroba = true;
+				
+			}
+			else if(eMailPropuesto[i]=='.') {
+				tienePunto = true;
+			}
+			if(tieneArroba && tienePunto) {
+				return true;
+			}
+		}
+		return false;
+	}
+	///////////ESTE SIRVE MAS PORQUE ES MAS CORTO Y GG ///////////////////////
+	public boolean esEmailValidoConContains(String eMail) {
+		/*
+		 * Evalúa si un String determinado puede ser almacenado como E-MAIL.
+		 */
+		if(eMail.contains("@") && eMail.contains(".")) {
+			return true;
+		}
+			return false;
+	}
+	/////////////////////////////////////////////////////
+	
+	
+	public boolean registrarNuevaLlamada(Llamada nueva) {
+		for(int i = 0; i < llamadasRecibidas.length ;i++) {
+			if(llamadasRecibidas[i]==null) {
+				llamadasRecibidas[i]=nueva;
+				return true;
+			}	
+		}
+		return false;
+	}
+	
+	
+	public String toString() {
+		/*
+		 * Muestra los datos de un contacto, entre los que se debe incluir el registro de las llamadas realizadas.
+		 */
+		String resultado = "";
+		resultado = this.nombre+" "+this.apellido+".\n";
+		for(int i = 0; i<llamadasRecibidas.length;i++) {
+			resultado += "\n"+llamadasRecibidas[i].getObservaciones();
+		}
+		
+		return resultado;
+	}
+	
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+}
+
